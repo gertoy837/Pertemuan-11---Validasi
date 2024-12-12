@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+body {
+    background-color: #eee;
+}
+
+.container {
+    font-family: 'Nunito', sans-serif;
+}
+
+.box {
+    width: 500px;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #fff;
+}
+
+.box2 {
+    width: 500px;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    /* background-color: #f8f9fa; */
+}
+
+fieldset {
+    padding: 0px 40px 10px;
+    border-radius: 12px;
+    background-color: #fff;
+}
+
+.form {
+    padding: 10px;
+}
+
+.title {
+    font-weight: 800;
+    font-size: 28px;
+    margin: 15px;
+    text-align: center;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.col > input{
+    margin-top: 8px;
+    padding: 3px 18px 3px 5px;
+    border: 1px solid #000;
+    border-radius: 6px;
+}
+
+.jam1 {
+    padding: 3px 48px;
+    margin-top: 8px;
+    border: 1px solid #000;
+    border-radius: 6px;
+    & .is-invalid {
+        border: 1px solid red;
+    }
+}
+
+.jam2 {
+    padding: 3px 48px;
+    margin-top: 8px;
+    border: 1px solid #000;
+    border-radius: 6px;
+    & .is-invalid {
+        border: 1px solid red;
+    }
+}
+
+.btn {
+    margin-top: 10px;
+    padding: 10px 30px;
+    background-color: #008CBA;
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #4CAF50;
+}

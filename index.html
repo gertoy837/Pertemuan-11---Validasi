@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validasi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container d-flex">
+        <fieldset class="box">
+            <h1 class="title">Form Tiket</h1>
+            <div class="form">
+                <div class="col">
+                    <label for="nama">Nama Pelanggan</label>
+                    <input type="text" class="form-control" name="nama" id="nama">
+                    <div class="error-nama"></div>
+                </div>
+                <div class="col">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" name="email" id="email">
+                    <div class="error-email"></div>
+                </div>
+                <div class="col">
+                    <label for="jam_keber">Jam Keberangkatan</label>
+                    <div class="d-flex gap-2">
+                        <input type="time" name="jam_keber" id="jam1" class="form-control jam1">
+                        <input type="time" name="jam_keber" id="jam2" class="form-control jam2">
+                    </div>
+                    <div class="error-jam"></div>
+                </div>
+                <div class="col">
+                    <label for="tujuan">Tujuan Keberangkatan</label>
+                    <input type="text" class="form-control" name="tujuan" id="tujuan">
+                    <div class="error-tujuan"></div>
+                </div>
+                <div class="col">
+                    <label for="jumlah">Jumlah Tiket</label>
+                    <input type="number" class="form-control" name="jumlah" id="jumlah">
+                    <div class="error-jumlah"></div>
+                </div>
+                <div class="col">
+                    <button class="btn" onclick="submit(event)">Submit</button>
+                </div>
+            </div>
+        </fieldset>
+        <div id="box-hasil" class="d-none">
+            <fieldset class="box2">
+                <h1 class="title">Hasil Tiket</h1>
+                <div class="hasil">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label for="nama_hasil">Nama Pelanggan</label>
+                            <input type="text" class="form-control" id="nama_hasil" disabled>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="email_hasil">Email</label>
+                            <input type="text" class="form-control" id="email_hasil" disabled>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="jam_hasil">Jam Keberangkatan</label>
+                            <input type="text" class="form-control" id="jam_hasil" disabled>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="tujuan_hasil">Tujuan Keberangkatan</label>
+                            <input type="text" class="form-control" id="tujuan_hasil" disabled>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="jumlah_hasil">Jumlah Tiket</label>
+                            <input type="text" class="form-control" id="jumlah_hasil" disabled>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+
+    <script>
+        let box = document.getElementById("box-hasil");
+        let nama = document.getElementById("nama");
+        let email = document.getElementById("email");
+        let jam1 = document.getElementById("jam1");
+        let jam2 = document.getElementById("jam2");
+        let tujuan = document.getElementById("tujuan");
+        let jumlah = document.getElementById("jumlah");
+
+        let isi = [nama, email, jam1, jam2, tujuan, jumlah];
+
+        let error_nama = document.querySelector(".error-nama");
+        let error_email = document.querySelector(".error-email");
+        let error_jam = document.querySelector(".error-jam");
+        let error_tujuan = document.querySelector(".error-tujuan");
+        let error_jumlah = document.querySelector(".error-jumlah");
+
+        let error = [error_nama, error_email, error_jam, error_tujuan, error_jumlah];
+
+        function cekEmail(email) {
+            const format_email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return format_email.test(email);
+        }
+
+        isi.forEach(isian => {
+            isian.addEventListener("input", () => {
+                if (isian.value !== "") {
+                    isian.classList.remove("is-invalid");
+                    error.forEach(text => {
+                        text.innerHTML = "";
+                    })
+                }
+            });
+        })
+
+        function submit(event) {
+            event.preventDefault();
+
+            function cek_nama() {
+                if (nama.value == '') {
+                    nama.classList.add("is-invalid");
+                    error_nama.innerHTML = '<span class="text-danger">* Tidak boleh kosong</span>';
+                } else if (nama.value.length > 30) {
+                    nama.classList.add("is-invalid");
+                    error_nama.innerHTML = '<span class="text-danger">* Maksimal 30 karakter</span>';
+                } else {
+                    nama.classList.remove("is-invalid");
+                    error_nama.innerHTML = "";
+                    return true;
+                }
+            }
+
+            function cek_email() {
+                if (email.value.trim() === "") {
+                    error_email.innerHTML = '<span class="text-danger">* Email tidak boleh kosong</span>';
+                    email.classList.add("is-invalid");
+                } else if (!cekEmail(email.value)) {
+                    error_email.innerHTML = '<span class="text-danger">* Format email tidak valid</span>';
+                    email.classList.add("is-invalid");
+                } else {
+                    error_email.innerHTML = "";
+                    email.classList.remove("is-invalid");
+                    return true;
+                }
+            }
+
+            function cek_jam() {
+                if (jam1.value == "" || jam2.value == "") {
+                    jam1.classList.add("is-invalid");
+                    jam2.classList.add("is-invalid");
+                    error_jam.innerHTML = '<span class="text-danger">* Jam keberangkatan harus dipilih</span>';
+                } else {
+                    jam1.classList.remove("is-invalid");
+                    jam2.classList.remove("is-invalid");
+                    error_jam.innerHTML = "";
+                    return true;
+                }
+            }
+
+            function cek_tujuan() {
+                if (tujuan.value === "") {
+                    error_tujuan.innerHTML = '<span class="text-danger">* Tujuan keberangkatan harus diisi</span>';
+                    tujuan.classList.add("is-invalid");
+                } else {
+                    error_tujuan.innerHTML = "";
+                    tujuan.classList.remove("is-invalid");
+                    return true;
+                }
+            }
+
+            function cek_jumlah() {
+                if (jumlah.value == "" || jumlah.value <= 0) {
+                    error_jumlah.innerHTML = '<span class="text-danger">* Jumlah tiket harus diisi, lebih besar dari 0, dan harus berupa angka</span>';
+                    jumlah.classList.add("is-invalid");
+                } else if (jumlah.value > 10) {
+                    error_jumlah.innerHTML = '<span class="text-danger">* Jumlah tiket maksimal 10</span>';
+                    jumlah.classList.add("is-invalid");
+                } else {
+                    error_jumlah.innerHTML = "";
+                    jumlah.classList.remove("is-invalid");
+                    return true;
+                }
+            }
+
+            const valid_nama = cek_nama();
+            const valid_email = cek_email();
+            const valid_jam = cek_jam();
+            const valid_tujuan = cek_tujuan();
+            const valid_jumlah = cek_jumlah();
+
+            let nama_hasil = document.getElementById("nama_hasil");
+            let email_hasil = document.getElementById("email_hasil");
+            let jam_hasil = document.getElementById("jam_hasil");
+            let tujuan_hasil = document.getElementById("tujuan_hasil");
+            let jumlah_hasil = document.getElementById("jumlah_hasil");
+
+            if (valid_nama && valid_email && valid_jam && valid_tujuan && valid_jumlah) {
+                box.classList.remove("d-none");
+
+                nama_hasil.value = nama.value;
+                email_hasil.value = email.value;
+                jam_hasil.value = `${jam1.value} - ${jam2.value}`;
+                tujuan_hasil.value = tujuan.value;
+                jumlah_hasil.value = jumlah.value;
+            };
+        }
+    </script>
+
+</body>
+
+</html>
